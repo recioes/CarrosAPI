@@ -1,70 +1,62 @@
 ﻿using CarrosAPI.Interfaces.Repositories;
 using CarrosAPI.Interfaces.Services;
 using CarrosAPI.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using System.Linq;
+
+
 
 namespace CarrosAPI.Repository
 {
-    public class CarrosRepository : ICarrosRepository
 
+    public class CarroRepository : ICarrosRepository
     {
-        private readonly string filePath = "DataBase/Carros.csv";
-        private readonly ICSVService _csvFileService;
+        private readonly ICSVService _csvService;
+        private readonly string _caminho = "DataBase/Carros.csv";
 
-        public CarrosRepository(ICSVService csvFileService)
+        public CarroRepository(ICSVService csvService)
         {
-            this._csvFileService = csvFileService;
+            _csvService = csvService;
         }
-
+        public async Task<List<CarrosModel>> BuscarTodosCarros()
+        {
+            return await _csvService.LerCsvAsync(_caminho);
+        }
 
         public async Task<CarrosModel> BuscarPorId(int id)
         {
-            List<CarrosModel> carros = await _csvFileService.ReadCSVFileAsync(filePath);
-            return carros.FirstOrDefault(x => x.Id == id);
+            var carros = await BuscarTodosCarros();
+            return carros.FirstOrDefault(c => c.Id == id);
         }
 
-        public async Task<List<CarrosModel>> BuscarTodosCarros()
+        public async Task Adicionar(CarrosModel carro)
         {
-            List<CarrosModel> carros = await _csvFileService.ReadCSVFileAsync(filePath);
-            return carros;
-        }
-        public async Task<CarrosModel> Adicionar(CarrosModel carro)
-        {
-            await _csvFileService.WriteToCSVFileAsync(filePath, carro);
-
-            return carro;
+            var carros = await BuscarTodosCarros();
+            carros.Add(carro);
+            _csvService.EscreverCsvAsync(carros, _caminho);
         }
 
-        public async Task<CarrosModel> Atualizar(CarrosModel carro, int id)
+        public async Task Atualizar(CarrosModel carro)
         {
-            List<CarrosModel> carros = await _csvFileService.ReadCSVFileAsync(filePath);
-            CarrosModel carroPorId = await BuscarPorId(id);
-
-            // Atualizar as propriedades
-            carroPorId.Cor = carro.Cor;
-            carroPorId.Marca = carro.Marca;
-            carroPorId.Modelo = carro.Modelo;
-            carroPorId.Ano = carro.Ano;
-
-            await _csvFileService.WriteAllToCSVFileAsync(filePath, carros);
-
-            return carroPorId;
+            var carros = await BuscarTodosCarros();
+            var carroExistente = carros.FirstOrDefault(c => c.Id == carro.Id);
+            if (carroExistente != null)
+            {
+                carroExistente.Cor = carro.Cor;
+                carroExistente.Marca = carro.Marca;
+                carroExistente.Modelo = carro.Modelo;
+                carroExistente.Ano = carro.Ano;
+                _csvService.EscreverCsvAsync(carros, _caminho);
+            }
         }
 
-        public async Task<bool> Deletar(int id)
+        public async Task Deletar(int id)
         {
-            List<CarrosModel> carros = await _csvFileService.ReadCSVFileAsync(filePath);
-            CarrosModel carroPorId = await BuscarPorId(id);
-            carros.Remove(carroPorId);
-
-            await _csvFileService.WriteAllToCSVFileAsync(filePath, carros);
-           
-            return true;
-
+            var carros = await BuscarTodosCarros();
+            var carro = carros.FirstOrDefault(c => c.Id == id);
+            if (carro != null)
+            {
+                carros.Remove(carro);
+                _csvService.EscreverCsvAsync(carros, _caminho);
+            }
         }
     }
 }

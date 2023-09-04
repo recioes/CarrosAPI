@@ -1,54 +1,35 @@
 ﻿using CarrosAPI.Interfaces.Services;
 using CarrosAPI.Models;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
+
 
 namespace CarrosAPI.Services
 {
     public class CSVService : ICSVService
     {
-
-        public async Task<List<CarrosModel>> ReadCSVFileAsync(string filePath)
+        public async Task<List<CarrosModel>> LerCsvAsync(string caminho)
         {
-            List<CarrosModel> carros = new List<CarrosModel>();
+            List<CarrosModel> records;
 
-            using (StreamReader reader = new StreamReader(filePath))
+            using (var reader = new StreamReader(caminho))
+            using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
             {
-                string linha;
-                while ((linha = await reader.ReadLineAsync()) != null)
-                {
-                    string[] campos = linha.Split(',');
-                    if (campos.Length == 5)
-                    {
-                        carros.Add(new CarrosModel
-                        {
-                            Id = int.Parse(campos[0]),
-                            Cor = campos[1],
-                            Marca = campos[2],
-                            Modelo = campos[3],
-                            Ano = int.Parse(campos[4])
-                        });
-                    }
-                }
+                csv.Context.RegisterClassMap<CarrosModelClassMap>();
+                records = new List<CarrosModel>(await csv.GetRecordsAsync<CarrosModel>().ToListAsync());
             }
 
-            return carros;
+            return records;
         }
 
-        public async Task WriteAllToCSVFileAsync(string filePath, List<CarrosModel> carros)
+        public async Task EscreverCsvAsync(List<CarrosModel> carros, string caminho)
         {
-            using (StreamWriter writer = new StreamWriter(filePath, append: false))
+            using (var writer = new StreamWriter(caminho))
+            using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
             {
-                foreach (var carro in carros)
-                {
-                    await writer.WriteLineAsync($"{carro.Id},{carro.Cor},{carro.Marca},{carro.Modelo},{carro.Ano}");
-                }
-            }
-        }
-
-        public async Task WriteToCSVFileAsync(string filePath, CarrosModel carro)
-        {
-            using (StreamWriter writer = new StreamWriter(filePath, append: true))
-            {
-                await writer.WriteLineAsync($"{carro.Id},{carro.Cor},{carro.Marca},{carro.Modelo},{carro.Ano}");
+                csv.Context.RegisterClassMap<CarrosModelClassMap>();
+                await csv.WriteRecordsAsync(carros);
             }
         }
     }

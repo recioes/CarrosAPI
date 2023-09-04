@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarrosAPI", "WebApplication3\CarrosAPI.csproj", "{C9D563FE-F5F2-4C03-89F6-598E759EE6FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarrosAPI.Tests", "Tests\CarrosAPI.Tests.csproj", "{6A9B0548-2351-4044-97C0-07A99F09BC2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C9D563FE-F5F2-4C03-89F6-598E759EE6FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9D563FE-F5F2-4C03-89F6-598E759EE6FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9D563FE-F5F2-4C03-89F6-598E759EE6FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A9B0548-2351-4044-97C0-07A99F09BC2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9B0548-2351-4044-97C0-07A99F09BC2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9B0548-2351-4044-97C0-07A99F09BC2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9B0548-2351-4044-97C0-07A99F09BC2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

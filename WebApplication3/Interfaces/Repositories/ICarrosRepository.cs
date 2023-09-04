@@ -7,9 +7,9 @@ namespace CarrosAPI.Interfaces.Repositories
     {
         Task<List<CarrosModel>> BuscarTodosCarros();
         Task<CarrosModel> BuscarPorId(int id);
-        Task<CarrosModel> Adicionar(CarrosModel carro);
-        Task<CarrosModel> Atualizar(CarrosModel carro, int id);
-        Task<bool> Deletar(int id);
+        Task Adicionar(CarrosModel carro);
+        Task Atualizar(CarrosModel carro);
+        Task Deletar(int id);
 
 
 

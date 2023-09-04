@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 // Dependências
 builder.Services.AddScoped<ICarrosService, CarrosService>();
-builder.Services.AddScoped<ICarrosRepository, CarrosRepository>();
+builder.Services.AddScoped<ICarrosRepository, CarroRepository>();
 builder.Services.AddSingleton<ICSVService, CSVService>();
 
 var app = builder.Build();

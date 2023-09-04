@@ -1,12 +1,12 @@
-﻿using CarrosAPI.Models;
-using System.Threading.Tasks;
+﻿
+using CarrosAPI.Models;
+
 
 namespace CarrosAPI.Interfaces.Services
 {
     public interface ICSVService
     {
-        Task<List<CarrosModel>> ReadCSVFileAsync(string filePath);
-        Task WriteAllToCSVFileAsync(string filePath, List<CarrosModel> carros);
-        Task WriteToCSVFileAsync(string filePath, CarrosModel carro);
+        Task<List<CarrosModel>> LerCsvAsync(string caminho);
+        Task EscreverCsvAsync(List<CarrosModel> carros, string caminho);
     }
 }

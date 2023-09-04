@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CarrosAPI.Models;
-using CarrosAPI.Interfaces.Services; 
+using CarrosAPI.Interfaces.Services;
+
 
 namespace CarrosAPI.Controllers
 {
