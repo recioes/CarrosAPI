@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CarrosAPI.Services;
 
-namespace CarrosAPI.Tests.Services.CSVServiceTests
+namespace CarrosAPI.Tests.ServicesTests.CSVServiceTests
 {
-    internal class LerCsvAsyncTests
+
+    public class LerCsvAsyncTests
     {
+        [Fact]
+        public void Test1()
+        {
+
+        }
     }
+
 }

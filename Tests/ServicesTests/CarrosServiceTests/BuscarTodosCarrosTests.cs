@@ -1,6 +1,8 @@
-namespace Tests
+
+
+namespace CarrosAPI.Tests.ServicesTests.CarrosServiceTests
 {
-    public class UnitTest1
+    public class BuscarTodosCarrosTests
     {
         [Fact]
         public void Test1()

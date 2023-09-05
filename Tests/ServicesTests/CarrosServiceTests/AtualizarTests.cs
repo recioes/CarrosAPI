@@ -4,9 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarrosAPI.Tests.Services.CarrosServiceTests
+
+namespace CarrosAPI.Tests.ServicesTests.CarrosServiceTests
 {
-    internal class AtualizarTests
+    public class AtualizarTests
     {
+        [Fact]
+        public void Test1()
+        {
+
+        }
     }
 }
+
