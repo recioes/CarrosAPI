@@ -14,7 +14,7 @@ O projeto "API de Gerenciamento de Carros" é uma aplicação C# desenvolvida co
 
 
 <p align="center">
-  <img alt="design" height="600px" src= "https://private-user-images.githubusercontent.com/118849369/265589812-3b3dba34-e302-445e-b3e2-ceadb6aac7db.jpg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE2OTM4OTA2MTEsIm5iZiI6MTY5Mzg5MDMxMSwicGF0aCI6Ii8xMTg4NDkzNjkvMjY1NTg5ODEyLTNiM2RiYTM0LWUzMDItNDQ1ZS1iM2UyLWNlYWRiNmFhYzdkYi5qcGc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMwOTA1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMDkwNVQwNTA1MTFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wZmU2OWNlNDI4MDRlMWJiYmNkMTA1NmE5ZWZjZWU3ZDExY2JiZGM0NWQ2MzhjMTFlMGVmNjE5ZmVhNGNkZmU0JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.aMozR7xhXIsHeogDdj8-5kMtqxY-zCxugcAGRm6icAo">
+  <img alt="design" height="600px" src= "https://source.unsplash.com/random/900%C3%97700/?cars">
 </p>
 
 ## 🚀 Tecnologias
