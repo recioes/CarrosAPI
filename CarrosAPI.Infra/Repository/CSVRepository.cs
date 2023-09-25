@@ -1,13 +1,13 @@
-﻿using CarrosAPI.Interfaces.Services;
-using CarrosAPI.Models;
+﻿using CarrosAPI.Core.Interfaces.Repositories;
+using CarrosAPI.Core.Models;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
 
 
-namespace CarrosAPI.Services
+namespace CarrosAPI.Infra.Repository
 {
-    public class CSVService : ICSVService
+    public class CSVRepository : ICSVRepository
     {
         public async Task<List<CarrosModel>> LerCsvAsync(string caminho)
         {
@@ -34,7 +34,7 @@ namespace CarrosAPI.Services
         }
     }
 }
-    
+
 
 
 

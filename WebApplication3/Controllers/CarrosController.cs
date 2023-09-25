@@ -1,53 +1,99 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CarrosAPI.Models;
-using CarrosAPI.Interfaces.Services;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using CarrosAPI.Core.Models;
+using CarrosAPI.Core.Interfaces.Services;
+using Swashbuckle.AspNetCore.Annotations;
+using CarrosAPI.Core.Services;
+
 
 
 namespace CarrosAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("API/[controller]")]
     [ApiController]
-    public class CarrosController : ControllerBase
+    public class CarrosController : APIController
     {
-        private readonly ICarrosService _carrosService;  
+        private readonly ICarrosService _carrosService;
 
-        public CarrosController(ICarrosService carrosService)  
+        public CarrosController(ICarrosService carrosService, IAuthService authService, TokenService tokenService)
+: base(authService, tokenService)  
         {
             _carrosService = carrosService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CarrosModel>>> BuscarTodosCarros()
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Obtem todos os carros")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<CarrosModel>>> BuscarTodosCarrosAsync()
         {
-            return Ok(await _carrosService.BuscarTodosCarros());
+            return Ok(await _carrosService.BuscarTodosCarrosAsync());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CarrosModel>> BuscarPorId(int id)
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Obtem carro pelo id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<CarrosModel>> BuscarPorIdAsync(int id)
         {
-            return Ok(await _carrosService.BuscarPorId(id));
+            var carro = await _carrosService.BuscarPorIdAsync(id);
+            if (carro == null)
+            {
+                return NotFound("Carro não encontrado");
+            }
+            return Ok(carro);
         }
 
         [HttpPost]
-        public async Task<ActionResult<CarrosModel>> Adicionar([FromBody] CarrosModel carroModel)
+        [Authorize]
+        [SwaggerOperation(Summary = "Adiciona um carro novo")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AdicionarAsync([FromBody] CarrosModel carroModel)
         {
-            return Ok(await _carrosService.Adicionar(carroModel));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var novoCarro = await _carrosService.AdicionarAsync(carroModel);
+            return CreatedAtAction(nameof(BuscarPorIdAsync), new { id = novoCarro.Id }, novoCarro);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<CarrosModel>> Atualizar([FromBody] CarrosModel carroModel, int id)
+        [Authorize]
+        [SwaggerOperation(Summary = "Atualiza um carro existente")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AtualizarAsync(int id, [FromBody] CarrosModel carroModel)
         {
-            return Ok(await _carrosService.Atualizar(carroModel, id));
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var carroAtualizado = await _carrosService.AtualizarAsync(carroModel, id);
+            if (carroAtualizado == null)
+            {
+                return NotFound("Carro não encontrado");
+            }
+            return Ok(carroAtualizado);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> Deletar(int id)
+        [Authorize]
+        [SwaggerOperation(Summary = "Deleta um carro existente")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeletarAsync(int id)
         {
-            return Ok(await _carrosService.Deletar(id));
+            var sucesso = await _carrosService.DeletarAsync(id);
+            if (!sucesso)
+            {
+                return NotFound("Carro não encontrado");
+            }
+            return Ok("Carro deletado com sucesso");
         }
     }
 }
-
-
-
-

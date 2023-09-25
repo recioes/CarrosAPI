@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 
-namespace CarrosAPI.Models
+namespace CarrosAPI.Core.Models
 {
     public sealed class CarrosModelClassMap : ClassMap<CarrosModel>
     {
