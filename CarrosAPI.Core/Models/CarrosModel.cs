@@ -1,6 +1,5 @@
 ﻿
-
-namespace CarrosAPI.Models
+namespace CarrosAPI.Core.Models
 {
     public class CarrosModel
     {

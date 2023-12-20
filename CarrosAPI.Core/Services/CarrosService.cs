@@ -1,9 +1,8 @@
-﻿using CarrosAPI.Interfaces.Repositories;
-using CarrosAPI.Interfaces.Services;
-using CarrosAPI.Models;
+﻿using CarrosAPI.Core.Interfaces.Repositories;
+using CarrosAPI.Core.Interfaces.Services;
+using CarrosAPI.Core.Models;
 
-
-namespace CarrosAPI.Services
+namespace CarrosAPI.Core.Services
 {
     public class CarrosService : ICarrosService
     {
@@ -14,38 +13,38 @@ namespace CarrosAPI.Services
             _carrosRepository = carrosRepository;
         }
 
-        public async Task<CarrosModel> Adicionar(CarrosModel carro)
+        public async Task<CarrosModel> AdicionarAsync(CarrosModel carro)
         {
-            var carroExistente = await _carrosRepository.BuscarPorId(carro.Id);
+            var carroExistente = await _carrosRepository.BuscarPorIdAsync(carro.Id);
             if (carroExistente != null)
             {
                 throw new Exception($"Já existe um carro com o ID {carro.Id}");
             }
 
-            await _carrosRepository.Adicionar(carro);
+            await _carrosRepository.AdicionarAsync(carro);
             return carro;
         }
 
-        public async Task<CarrosModel> Atualizar(CarrosModel carro, int id)
+        public async Task<CarrosModel> AtualizarAsync(CarrosModel carro, int id)
         {
             if (id != carro.Id)
             {
                 throw new Exception($"ID do objeto e ID da URL não coincidem");
             }
 
-            var carroExistente = await _carrosRepository.BuscarPorId(id);
+            var carroExistente = await _carrosRepository.BuscarPorIdAsync(id);
             if (carroExistente == null)
             {
                 throw new Exception($"Carro com ID {id} não encontrado");
             }
 
-            await _carrosRepository.Atualizar(carro);
+            await _carrosRepository.AtualizarAsync(carro);
             return carro;
         }
 
-        public async Task<CarrosModel> BuscarPorId(int id)
+        public async Task<CarrosModel> BuscarPorIdAsync(int id)
         {
-            var carro = await _carrosRepository.BuscarPorId(id);
+            var carro = await _carrosRepository.BuscarPorIdAsync(id);
             if (carro == null)
             {
                 throw new Exception($"Carro com ID {id} não encontrado");
@@ -53,9 +52,9 @@ namespace CarrosAPI.Services
             return carro;
         }
 
-        public async Task<List<CarrosModel>> BuscarTodosCarros()
+        public async Task<List<CarrosModel>> BuscarTodosCarrosAsync()
         {
-            var carros = await _carrosRepository.BuscarTodosCarros();
+            var carros = await _carrosRepository.BuscarTodosCarrosAsync();
             if (carros == null || !carros.Any())
             {
                 throw new Exception("Não existem carros cadastrados");
@@ -63,15 +62,15 @@ namespace CarrosAPI.Services
             return carros;
         }
 
-        public async Task<bool> Deletar(int id)
+        public async Task<bool> DeletarAsync(int id)
         {
-            var carroExistente = await _carrosRepository.BuscarPorId(id);
+            var carroExistente = await _carrosRepository.BuscarPorIdAsync(id);
             if (carroExistente == null)
             {
                 throw new Exception($"Carro com ID {id} não encontrado");
             }
 
-            await _carrosRepository.Deletar(id);
+            await _carrosRepository.DeletarAsync(id);
             return true;
         }
     }

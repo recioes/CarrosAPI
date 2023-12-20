@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "CarrosAPI.Infra": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53501;http://localhost:53502"
+    }
+  }
+}
